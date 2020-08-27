@@ -1,0 +1,15 @@
+Sub qrytest()
+Dim qry As WorkbookQuery
+Dim MScript As String
+
+MScript = LoadTextFile("C:\Users\bigbu\Documents\Learning\PowerBI\Test\MScript.txt")
+Set qry = ThisWorkbook.Queries.Add("qrytest", MScript)
+
+End Sub
+
+
+Function LoadTextFile(FullFileName As String) As String
+    With CreateObject("Scripting.FileSystemObject")
+        LoadTextFile = .OpenTextFile(FullFileName, 1).readall
+    End With
+End Function

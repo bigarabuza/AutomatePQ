@@ -1,0 +1,8 @@
+let
+    Source = Csv.Document(File.Contents("C:\Users\bigbu\Downloads\factbook.csv"),[Delimiter=";", Columns=45, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+    #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each [Country] <> "String"),
+    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"Country", "Birth rate(births/1000 population)", "Total fertility rate(children born/woman)", "Unemployment rate(%)"}),
+    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Birth rate(births/1000 population)", type number}, {"Total fertility rate(children born/woman)", type number}, {"Unemployment rate(%)", type number}})
+in
+    #"Changed Type"
